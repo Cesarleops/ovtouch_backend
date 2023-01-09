@@ -14,7 +14,7 @@ const newUser = async(req,res) => {
         
     } catch (error) {
         console.log(error)
-        res.status(401).send('Something went wrong')
+        res.status(400).send('Something went wrong')
     }
 }
 

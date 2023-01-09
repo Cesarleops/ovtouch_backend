@@ -21,7 +21,24 @@ const newConversation = async(req,res) => {
 
 }
 
+const getConversation = async(req,res) => {
+    const {userId} = req.params
+    try {
+        const conversations = await Conversation.find({
+            members:{$in: userId}
+        })
+        res.json({
+            ok:true,
+            conversations
+        })
+    } catch (error) {
+        console.log(error)
+        res.status(401).send('Something went wrong')
+    }
+}
+
 
 module.exports =  {
-    newConversation
+    newConversation,
+    getConversation
 }
