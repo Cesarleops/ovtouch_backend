@@ -34,7 +34,19 @@ const newMessage = async(req,res) => {
     res.status(400).send('Something went wrong')
    }
  }
+
+ const deleteMessage = async(req,res) => {
+  const {messageId} = req.params
+
+  const deletedMessage = await Message.findByIdAndDelete(messageId)
+
+  res.json({
+      msg:'deleted message',
+      deletedMessage
+  })
+ }
 module.exports = {
     newMessage,
-    getMessages
+    getMessages,
+    deleteMessage
 }

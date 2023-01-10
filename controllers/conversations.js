@@ -37,8 +37,19 @@ const getConversation = async(req,res) => {
     }
 }
 
+const deleteConversation = async(req,res) => {
+    const {chatId} = req.params
+
+    const deletedConversation = await Conversation.findByIdAndDelete(chatId)
+  
+    res.json({
+        msg:'deleted conversation',
+        deletedConversation
+    })
+}
 
 module.exports =  {
     newConversation,
-    getConversation
+    getConversation,
+    deleteConversation
 }

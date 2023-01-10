@@ -37,6 +37,7 @@ class Server {
     routes(){
         this.app.use(this.userPath, require('../routes/users'))
         this.app.use(this.userPath, require('../routes/conversations'))
+        this.app.use(this.userPath, require('../routes/messages'))
         this.app.use(this.authPath, require('../routes/auth'))
     }
 
