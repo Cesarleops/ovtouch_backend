@@ -12,7 +12,7 @@ router.post('/newmessage',[
 ], newMessage)
 
 
-router.get('/:chatId',[
+router.get('/message/:chatId',[
     check('chatId').isMongoId(),
     validateFields
 ], getMessages)

@@ -52,6 +52,7 @@ const deleteUser = async(req,res) => {
     res.json({
         msg:'deleted user',
         deletedUser
+      
     })
 }
 module.exports = {

@@ -3,6 +3,7 @@ const {newUser, updateUser, deleteUser} = require('../controllers/users')
 const {check} = require('express-validator')
 const {validateFields} = require('../middlewares/validate-fields')
 const {validEmail, userExists} = require('../helpers/validators')
+const { validateJWT } = require('../middlewares/validate-jwt')
 const router = Router()
 
 
@@ -22,6 +23,7 @@ router.put('/:userId',[
 ] ,updateUser)
 
 router.delete('/:userId', [
+    validateJWT,
     check('userId').isMongoId(),
     check('userId').custom(userExists),
     validateFields
