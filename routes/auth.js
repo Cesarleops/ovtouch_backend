@@ -6,7 +6,10 @@ const {signWithGoogle} = require('../controllers/signWithGoogle')
 const {login} = require('../controllers/login')
 const router = Router()
 
-router.post('/google', signWithGoogle)
+router.post('/google', [
+    check('id_token', 'id_token is required').not().isEmpty(),
+    validateFields
+],signWithGoogle)
 
 router.post('/login', [
     check('email', 'Email is required').isEmail(),
