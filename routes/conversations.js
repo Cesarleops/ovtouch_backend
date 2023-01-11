@@ -8,7 +8,7 @@ const router = Router()
 
 router.post('/newconversation', newConversation)
 
-router.get('/:userId',[
+router.get('/conversation/:userId',[
     check('userId').isMongoId(),
     validateFields
 ],getConversation)
