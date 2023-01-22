@@ -1,7 +1,7 @@
 const express = require('express')
 const cors = require('cors')
 const {PORT} = process.env
-
+const {socketController} = require('../sockets/socketController')
 const {connectDb} = require('../database/config')
 
 
@@ -11,12 +11,21 @@ class Server {
         this.port = PORT
         this.userPath = '/api/users'
         this.authPath = '/api/auth'
+        this.server = require('http').createServer(this.app)
+        this.io = require('socket.io')(this.server, {
+            cors: {
+                origin: '*'
+            }
+        })
 
         this.dbConnection()
+
 
         this.middlewares()
 
         this.routes()
+
+        this.sockets()
 
     }
 
@@ -41,8 +50,14 @@ class Server {
         this.app.use(this.authPath, require('../routes/auth'))
     }
 
+    sockets(){
+        this.io.on('connection', socketController)
+        this.io.on('message', (message)=> {
+            console.log(message)})
+    }
+
     listen(){
-        this.app.listen(this.port, ()=> {
+        this.server.listen(this.port, ()=> {
             console.log(`Listening at port ${this.port}`)
         })
     }
