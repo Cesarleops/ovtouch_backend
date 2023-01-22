@@ -1,12 +1,11 @@
 const jwt = require('jsonwebtoken')
+const User = require('../models/user')
+
 
 const createJwt = (uid) => {
     
     return new Promise((resolve,reject) => {
         const payload = {uid}
-        console.log(payload)
-        console.log(process.env.SECRET_KEY)
-
         jwt.sign(payload, process.env.SECRET_KEY, {
             expiresIn: '4h'
         }, (err,token) => {
@@ -23,6 +22,21 @@ const createJwt = (uid) => {
     })
 }
 
+const checkJWT = async(token) => {
+    try {
+        const {uid} =  jwt.verify(token, process.env.SECRET_KEY)
+        const authenticatedUser = await User.findById(uid)
+        if(authenticatedUser){
+            return authenticatedUser
+        } else{
+            return null
+        }
+        
+    } catch (error) {
+        return null
+    }
+}
 module.exports = {
-    createJwt
+    createJwt,
+    checkJWT
 }

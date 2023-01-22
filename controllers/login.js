@@ -46,7 +46,25 @@ const login = async(req,res) => {
 
 }
 
+const renovateToken = async(req,res) => {
+    const {user} = req
+    console.log('id', user.id)
+    try {
+        const token = await createJwt(user.id)
+        res.json({
+            user,
+            token
+        })
+    } catch (error) {
+        console.log(error)
+        res.json('something went wrong with jwt')
+    }
+   
+
+    
+}
 
 module.exports = {
-    login
+    login,
+    renovateToken
 }
