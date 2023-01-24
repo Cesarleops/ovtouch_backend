@@ -8,7 +8,7 @@ const login = async(req,res) => {
         
     try {
         const user = await User.findOne({email})
-        console.log(user)
+
 
         if(!user){
             return res.status(400).json({
@@ -29,7 +29,7 @@ const login = async(req,res) => {
             })
         }
 
-        console.log(user.id)
+        
 
         const token = await createJwt(user.id)
 
@@ -48,7 +48,6 @@ const login = async(req,res) => {
 
 const renovateToken = async(req,res) => {
     const {user} = req
-    console.log('id', user.id)
     try {
         const token = await createJwt(user.id)
         res.json({

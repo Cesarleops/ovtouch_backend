@@ -13,7 +13,6 @@ const createJwt = (uid) => {
                 console.log(err)
                 reject('token could not be generated')
             } else {
-                console.log(token)
                 resolve(token)
             }
            

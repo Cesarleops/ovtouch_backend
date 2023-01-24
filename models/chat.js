@@ -10,7 +10,7 @@ class Message {
 class Chat {
     constructor(){
         this.messages = [],
-        this.activeUsers = {}
+        this.activeUsers = []
     }
 
     lastMessages(){
@@ -19,7 +19,7 @@ class Chat {
     }
 
     getUsers(){
-        return Object.values(this.activeUsers)
+        return this.activeUsers
     }
 
     sendMessage(uid,name,message){
@@ -29,11 +29,11 @@ class Chat {
     }
 
     connectUser(user){
-        this.activeUsers[user.id]= user
+        return this.activeUsers.push(user)
     }
 
     disconnectUser(id){
-        delete this.activeUsers[id]
+        this.activeUsers = this.activeUsers.filter((user) => user.id !== id);
     }
 
 }
