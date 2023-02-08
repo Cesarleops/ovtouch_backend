@@ -47,7 +47,9 @@ const login = async(req,res) => {
 }
 
 const renovateToken = async(req,res) => {
+    
     const {user} = req
+ 
     try {
         const token = await createJwt(user.id)
         res.json({

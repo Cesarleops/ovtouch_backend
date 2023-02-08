@@ -32,8 +32,8 @@ class Chat {
         return this.activeUsers.push(user)
     }
 
-    disconnectUser(id){
-        this.activeUsers = this.activeUsers.filter((user) => user.id !== id);
+    disconnectUser(uid){
+        this.activeUsers = this.activeUsers.filter((user) => user.uid !== uid);
     }
 
 }
