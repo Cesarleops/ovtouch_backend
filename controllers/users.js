@@ -6,7 +6,7 @@ const newUser = async(req,res) => {
 
  
     const {name, password, email, img, status, google} = req.body
-    console.log(req.body)
+   
     const salt = bcryptjs.genSaltSync()
  
 
@@ -43,6 +43,13 @@ const updateUser = async(req,res) => {
     })
 }
 
+const getUsers = async(req,res) => {
+  const {uid} = req.params
+  console.log('uid',uid)
+  const users = await User.find({ _id: {$ne: uid} })
+  res.json(users)
+}
+
 
 const deleteUser = async(req,res) => {
     const {userId} = req.params
@@ -58,5 +65,6 @@ const deleteUser = async(req,res) => {
 module.exports = {
     newUser,
     updateUser,
-    deleteUser
+    deleteUser,
+    getUsers
 }

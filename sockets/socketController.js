@@ -1,42 +1,33 @@
 
 const Chat = require('../models/chat')
-
-const {checkJWT} = require('../helpers/create-jwt')
 const chat = new Chat()
-
 
 const socketController = async(socket, io) => {
  
-   console.log('se conecto')
-
-    let user
-
-    socket.on('loged-user', (data) => {
-        user = data
-        chat.connectUser(data)
-        io.emit('active-users', chat.activeUsers )
-
+    socket.on('loged-users', (users) => {   
+        console.log('se disparo loged users')
+        chat.connectUsers(users)
+      
     })
  
     
-     socket.on("message", (message) => {
-       
+     socket.on("send-message", (data) => {
+        const sendedTo = chat.activeUsers.filter(u => u.uid === data.recievedBy )
+       if(sendedTo){
+        socket.to(sendedTo[0].uid).emit('message-recieved', data.message)
+       }
         
-        io.emit('recieve-message', message )
+       
     } )
     
-    socket.on('start-chat', (uid) => {
-     
-        socket.join(uid)
-    })
 
     socket.on('disconnect', () => {
-        console.log('se desconecto')
-        if(user){
-            chat.disconnectUser(user.uid)
-            io.emit('active-users', chat.activeUsers )
-            socket.disconnect()
-        }
+        
+        // if(user){
+        //     chat.disconnectUser(user.uid)
+        //     io.emit('active-users', chat.activeUsers )
+        //     socket.disconnect()
+        // }
         
 
     })

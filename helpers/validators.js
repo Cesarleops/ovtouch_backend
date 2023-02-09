@@ -1,6 +1,6 @@
 const User = require('../models/user')
-const Message = require('../models/message')
-const Conversation = require('../models/conversation')
+
+
 
 const validEmail = async(email) => {
     const repeatedEmail = await User.findOne({email})
@@ -16,22 +16,11 @@ const userExists = async(userId) => {
     }
 }
 
-const conversationExists = async(conversationId) => {
-    const registeredConversation =  await Conversation.findById(conversationId)
-    if(!registeredConversation){
-        throw new Error(`${conversationId} doesn't belong to any conversation`)
-    }
-}
 
-const messageExists = async(messageId) => {
-    const registeredMessage =  await Message.findById(messageId)
-    if(!registeredMessage){
-        throw new Error(`${messageId} doesn't belong to any message`)
-    }
-}
+
+
 module.exports = {
     validEmail,
     userExists,
-    conversationExists,
-    messageExists
+    
 }

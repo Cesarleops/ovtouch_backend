@@ -6,14 +6,15 @@ const {newMessage, getMessages, deleteMessage} = require('../controllers/message
 const router = Router()
 
 router.post('/newmessage',[
-    check('chatId').isMongoId(),
+    check('recievedBy').isMongoId(),
     check('sendedBy').isMongoId(),
     validateFields
 ], newMessage)
 
 
-router.get('/message/:chatId',[
-    check('chatId').isMongoId(),
+router.post('/message',[
+    check('sendedBy').isMongoId(),
+    check('recievedBy').isMongoId(),
     validateFields
 ], getMessages)
 

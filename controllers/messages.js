@@ -3,13 +3,14 @@ const Message = require('../models/message')
 const newMessage = async(req,res) => {
    try {
 
-    const {sendedBy, text, chatId} = req.body
-    const message = new Message({sendedBy, text, chatId})
-    await message.save()
-    res.json({
-        ok:true,
-        message
+    const {sendedBy, text, recievedBy} = req.body
+    const message = await Message.create({
+      members: [sendedBy,recievedBy],
+      sendedBy,
+      text
     })
+    
+    res.json(message)
     
    } catch (error) {
      console.log(error)
@@ -19,16 +20,17 @@ const newMessage = async(req,res) => {
 
 
  const getMessages = async(req,res) => {
-   const {chatId} = req.params
+   const {sendedBy, recievedBy} = req.body
    try {
     const messages = await Message.find({
-       chatId
+       members: {
+        $all: [sendedBy,recievedBy]
+       }
     })
 
-    res.json({
-      ok:true,
+    res.json(
       messages
-    })
+    )
    } catch (error) {
     console.log(error)
     res.status(400).send('Something went wrong')
