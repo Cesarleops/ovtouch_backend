@@ -27,9 +27,14 @@ const newMessage = async(req,res) => {
         $all: [sendedBy,recievedBy]
        }
     })
-
+    const orderedMessages = messages.map(m => {
+      return {
+        ownMessage: m.sendedBy.toString() === sendedBy,
+        message: m.text
+      }
+    })
     res.json(
-      messages
+      orderedMessages
     )
    } catch (error) {
     console.log(error)
