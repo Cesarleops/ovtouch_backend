@@ -11,9 +11,10 @@ class Chat {
         return this.activeUsers
     }
 
+  
 
-    connectUsers(users){
-        return this.activeUsers = [...this.activeUsers, ...users]
+    connectUser(uid){
+        return this.activeUsers.push(uid)
     }
 
     disconnectUser(uid){

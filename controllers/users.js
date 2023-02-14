@@ -45,7 +45,6 @@ const updateUser = async(req,res) => {
 
 const getUsers = async(req,res) => {
   const {uid} = req.params
-  console.log('uid',uid)
   const users = await User.find({ _id: {$ne: uid} })
   res.json(users)
 }

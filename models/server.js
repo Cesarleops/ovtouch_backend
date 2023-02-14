@@ -50,7 +50,8 @@ class Server {
     }
 
     sockets(){
-        this.io.on('connection', (socket) =>  socketController(socket, this.io))
+        global.onlineUsers = new Map()
+        this.io.on('connection', (socket) =>  socketController(socket))
         }
 
     listen(){
